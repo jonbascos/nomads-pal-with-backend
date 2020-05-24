@@ -34,6 +34,7 @@ router.post("/", auth, async (req, res) => {
   const {
     website,
     location,
+    bio,
     youtube,
     facebook,
     instagram,
@@ -46,6 +47,7 @@ router.post("/", auth, async (req, res) => {
   profileFields.user = req.user.id
   if (website) profileFields.website = website
   if (location) profileFields.location = location
+  if (bio) profileFields.bio = bio
   if (youtube) profileFields.youtube = youtube
   if (facebook) profileFields.facebook = facebook
   if (instagram) profileFields.instagram = instagram
@@ -92,4 +94,18 @@ router.get("/", async (req, res) => {
 // @route   GET api/profile/user/:user_id
 // @desc    Get profile by user ID
 // @access  Public
+
+router.get("/user/:user_id", async (req, res) => {
+  try {
+    const profile = await (
+      await Profile.findOne({ user: req.params.user_id })
+    ).populate("user", ["name"])
+
+    if (!profile) return res.status(400).json({ mgs: "Profile not found" })
+    res.json(profile)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send("Server Error")
+  }
+})
 module.exports = router

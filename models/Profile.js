@@ -12,6 +12,9 @@ const ProfileSchema = new Schema({
   location: {
     type: String,
   },
+  bio: {
+    type: String,
+  },
   social: {
     youtube: {
       type: String,
@@ -23,6 +26,9 @@ const ProfileSchema = new Schema({
       type: String,
     },
     twitter: {
+      type: String,
+    },
+    linkedin: {
       type: String,
     },
     github: {
