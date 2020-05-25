@@ -39,6 +39,7 @@ router.post("/", auth, async (req, res) => {
     facebook,
     instagram,
     twitter,
+    linkedin,
     github,
   } = req.body
 
@@ -48,11 +49,15 @@ router.post("/", auth, async (req, res) => {
   if (website) profileFields.website = website
   if (location) profileFields.location = location
   if (bio) profileFields.bio = bio
-  if (youtube) profileFields.youtube = youtube
-  if (facebook) profileFields.facebook = facebook
-  if (instagram) profileFields.instagram = instagram
-  if (twitter) profileFields.twitter = twitter
-  if (github) profileFields.github = github
+
+  // Build social object
+  profileFields.social = {}
+  if (youtube) profileFields.social.youtube = youtube
+  if (facebook) profileFields.social.facebook = facebook
+  if (instagram) profileFields.social.instagram = instagram
+  if (twitter) profileFields.social.twitter = twitter
+  if (linkedin) profileFields.social.linkedin = linkedin
+  if (github) profileFields.social.github = github
 
   try {
     let profile = await Profile.findOne({ user: req.user.id })
